@@ -75,21 +75,21 @@ impl Widget for &Keyboard {
         .flex(Flex::Center)
         .split(area);
 
-        let row_1_key_areas = Layout::horizontal([Constraint::Length(1); 10])
+        let row_1_key_areas = Layout::horizontal([Constraint::Length(1); ROW_1_KEYS.len()])
             .flex(Flex::Center)
             .split(rows[0]);
         for (index, key) in self.row_1.iter().enumerate() {
             key.render(row_1_key_areas[index], buf);
         }
 
-        let row_2_key_areas = Layout::horizontal([Constraint::Length(1); 9])
+        let row_2_key_areas = Layout::horizontal([Constraint::Length(1); ROW_2_KEYS.len()])
             .flex(Flex::Center)
             .split(rows[1]);
         for (index, key) in self.row_2.iter().enumerate() {
             key.render(row_2_key_areas[index], buf);
         }
 
-        let row_3_key_areas = Layout::horizontal([Constraint::Length(1); 7])
+        let row_3_key_areas = Layout::horizontal([Constraint::Length(1); ROW_3_KEYS.len()])
             .flex(Flex::Center)
             .split(rows[2]);
         for (index, key) in self.row_3.iter().enumerate() {
@@ -123,7 +123,7 @@ impl Default for Keyboard {
     }
 }
 
-impl Keyboard{
+impl Keyboard {
     pub fn set_key_state(&mut self, charecter: char, state: KeyState) {
         if ROW_1_KEYS.contains(&charecter) {
             let index = ROW_1_KEYS.iter().position(|&c| c == charecter).unwrap();

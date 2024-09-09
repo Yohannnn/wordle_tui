@@ -3,19 +3,15 @@ mod keyboard;
 mod letter;
 mod words;
 
-use super::tui;
+use std::io::Stdout;
+
 use anyhow::Result;
 use guess::Guess;
 use keyboard::{KeyState, Keyboard};
 use letter::LetterState;
 use rand::seq::SliceRandom;
 use ratatui::{
-    buffer::Buffer,
-    crossterm::event::{self, KeyCode},
-    layout::{Constraint, Flex, Layout, Rect},
-    text::Span,
-    widgets::Widget,
-    Frame,
+    buffer::Buffer, crossterm::event::{self, KeyCode}, layout::{Constraint, Flex, Layout, Rect}, prelude::CrosstermBackend, text::Span, widgets::Widget, Frame, Terminal
 };
 use words::WORDS;
 
@@ -78,7 +74,7 @@ impl<'a> App<'a> {
         }
     }
 
-    pub fn run(&mut self, terminal: &mut tui::Tui) -> Result<()> {
+    pub fn run(&mut self, terminal: &mut Terminal<CrosstermBackend<Stdout>>) -> Result<()> {
         while !self.exit {
             terminal.draw(|frame| self.render_frame(frame))?;
             self.handle_events()?;
